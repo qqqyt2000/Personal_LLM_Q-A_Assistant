@@ -9,6 +9,8 @@ You can use this Agent to Ask Deepseek simple questions and search by keywords i
 这是一个基于 Flask 的智能问答系统，集成了 AI 对话和个人知识库管理功能。系统包含两个主要模块：
 1. AI 问答对话（`app.py`，在第一个文件夹中）
 2. 个人知识库搜索（`app_2.py`，在第二个文件夹中）
+<img width="723" height="488" alt="a9346b3b77e34d22755eac4550c05b8" src="https://github.com/user-attachments/assets/b83eb3a9-9935-4663-a694-20fb78bca02a" />
+<img width="774" height="787" alt="89e7aed30640adf19522f58f44aaacf" src="https://github.com/user-attachments/assets/928dc20e-83d1-442d-9731-2eec4939c5e4" />
 
 ## 主要功能
 
