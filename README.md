@@ -5,9 +5,10 @@ You can use this Agent to Ask Deepseek simple questions and search by keywords i
 
 ## 项目简介
 
+为了解决现有AI问答工具无法用关键词搜索定位到具体对话问题与答案的痛点（deepseek没有关键词搜索功能，腾讯元宝仅可以定位到对话）
 这是一个基于 Flask 的智能问答系统，集成了 AI 对话和个人知识库管理功能。系统包含两个主要模块：
-1. AI 问答对话（`app.py`）
-2. 个人知识库搜索（`app_2.py`）
+1. AI 问答对话（`app.py`，在第一个文件夹中）
+2. 个人知识库搜索（`app_2.py`，在第二个文件夹中）
 
 ## 主要功能
 
