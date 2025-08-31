@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 95%;
+            max-width: 1500px;
+            height: 95%;
+            max-height: 370px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .user-input {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            color: black;
+            word-wrap: break-word;
+        }
+        .ai-response {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #c6e0ff;
+            color: black;
+            word-wrap: break-word;
+        }
+        .user-input {
+            text-align: right;
+            align-self: flex-start;
+        }
+        .ai-response {
+            text-align: left;
+            align-self: flex-end;
+        }
+        .input-area {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-area button {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .input-area button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin: 0; font-size: 18px;">AI Chat</h1>
+        <div id="chat-box" class="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (!userInput) return;
+    
+            const chatBox = document.getElementById('chat-box');
+    
+            // 显示用户输入
+            const userDiv = document.createElement('div');
+            userDiv.className = 'user-input';
+            userDiv.textContent = userInput;
+            chatBox.appendChild(userDiv);
+    
+            // 清空输入框
+            document.getElementById('user-input').value = '';
+    
+            // 显示 "Thinking" 提示
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.className = 'ai-response';
+            thinkingDiv.textContent = 'Thinking...';
+            chatBox.appendChild(thinkingDiv);
+    
+            // 滚动到底部
+            chatBox.scrollTop = chatBox.scrollHeight;
+    
+            // 调用后端 API
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userInput }),
+                });
+    
+                const data = await response.json();
+                if (data.error) {
+                    thinkingDiv.textContent = `Error: ${data.error}`;
+                    return;
+                }
+    
+                // 替换 "Thinking" 提示为 AI 回复
+                thinkingDiv.textContent = data.ai_message;
+    
+                // 滚动到底部
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                thinkingDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
